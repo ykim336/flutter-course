@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "824717411889",
+    "project_id": "flutter-tutorial-yk",
+    "storage_bucket": "flutter-tutorial-yk.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824717411889:android:bc74f25015eeb94f78f710",
+        "android_client_info": {
+          "package_name": "com.example.learningdart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjB98Yo7YT3Z2DHbGwdM_xeWSBLNvzsVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
