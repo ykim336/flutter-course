@@ -1,5 +1,4 @@
-// ignore_for_file: avoid_print
-
+import 'dart:developer' as devtools show log;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -59,14 +58,14 @@ class _LoginViewState extends State<LoginView> {
                 password: password,
               );
             } on FirebaseAuthException catch (e) {
-              print(e.code);
+              devtools.log(e.code);
               if (e.code == 'user-not-found') {
-                print("user not found");
+                devtools.log("user not found");
               } else if (e.code == 'wrong-password') {
-                print("wrong password");
+                devtools.log("wrong password");
               }
             } catch (e) {
-              print(e.runtimeType);
+              devtools.log(e.runtimeType.toString());
             }
           },
           child: const Text("Login"),
