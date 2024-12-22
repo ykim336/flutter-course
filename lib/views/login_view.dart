@@ -1,5 +1,4 @@
 // ignore_for_file: unused_local_variable, use_build_context_synchronously
-import 'dart:developer' as devtools show log;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:learningdart/constants/errors_const.dart';
@@ -82,7 +81,10 @@ class _LoginViewState extends State<LoginView> {
                 );
               }
             } catch (e) {
-              devtools.log(e.runtimeType.toString());
+              await showErrorDialog(
+                context,
+                e.toString(),
+              );
             }
           },
           child: const Text("Login"),

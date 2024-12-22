@@ -1,7 +1,9 @@
-import 'dart:developer' as devtools show log;
+// ignore_for_file: unused_import, use_build_context_synchronously, unused_local_variable
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:learningdart/constants/errors_const.dart';
 import 'package:learningdart/constants/routes_const.dart';
+import 'package:learningdart/utilities/show_error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -53,19 +55,35 @@ class _RegisterViewState extends State<RegisterView> {
             final email = _email.text;
             final password = _password.text;
             try {
-              // ignore: unused_local_variable
               final userCredential =
                   await FirebaseAuth.instance.createUserWithEmailAndPassword(
                 email: email,
                 password: password,
               );
+              final user = FirebaseAuth.instance.currentUser;
+              await user?.sendEmailVerification();
+              Navigator.of(context).pushNamed(verifyEmailRoute);
             } on FirebaseAuthException catch (e) {
-              if (e.code == 'email-already-in-use') {
-                devtools.log('email in use');
-              } else if (e.code == "invalid-email") {
-                devtools.log('invalid email');
-              } else if (e.code == "weak-password") {
-                devtools.log('weak password');
+              if (e.code == emailAlreadyInUseError) {
+                await showErrorDialog(
+                  context,
+                  'Email Already in Use',
+                );
+              } else if (e.code == invalidEmailError) {
+                await showErrorDialog(
+                  context,
+                  'Invalid Email',
+                );
+              } else if (e.code == weakPasswordError) {
+                await showErrorDialog(
+                  context,
+                  'Weak Password',
+                );
+              } else {
+                await showErrorDialog(
+                  context,
+                  e.code,
+                );
               }
             }
           },
