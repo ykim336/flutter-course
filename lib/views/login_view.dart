@@ -1,8 +1,9 @@
 // ignore_for_file: unused_local_variable, use_build_context_synchronously
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:learningdart/constants/errors_const.dart';
 import 'package:learningdart/constants/routes_const.dart';
+import 'package:learningdart/services/auth/auth_exceptions.dart';
+import 'package:learningdart/services/auth/auth_service.dart';
 import 'package:learningdart/utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -54,8 +55,7 @@ class _LoginViewState extends State<LoginView> {
             final email = _email.text;
             final password = _password.text;
             try {
-              final userCredential =
-                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+              final userCredential = await AuthService.firebase().logIn(
                 email: email,
                 password: password,
               );
@@ -63,27 +63,20 @@ class _LoginViewState extends State<LoginView> {
                 notesRoute,
                 (route) => false,
               );
-            } on FirebaseAuthException catch (e) {
-              if (e.code == invalidCredentialError) {
-                await showErrorDialog(
-                  context,
-                  'Invalid Credentials',
-                );
-              } else if (e.code == invalidEmailError) {
-                await showErrorDialog(
-                  context,
-                  'Invalid Email',
-                );
-              } else {
-                await showErrorDialog(
-                  context,
-                  e.toString(),
-                );
-              }
-            } catch (e) {
+            } on InvalidCredentialsAuthException {
               await showErrorDialog(
                 context,
-                e.toString(),
+                'Invalid Credentials',
+              );
+            } on InvalidEmailAuthException {
+              await showErrorDialog(
+                context,
+                'Invalid Email',
+              );
+            } on GenericAuthException {
+              await showErrorDialog(
+                context,
+                'Auth Error',
               );
             }
           },
