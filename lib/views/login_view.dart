@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, use_build_context_synchronously
+// ignore_for_file: unused_local_variable, use_build_context_synchronously, unused_import
 import 'package:flutter/material.dart';
 import 'package:learningdart/constants/errors_const.dart';
 import 'package:learningdart/constants/routes_const.dart';
